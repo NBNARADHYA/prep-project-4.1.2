@@ -1,11 +1,11 @@
-from fastapi import FastAPI, BackgroundTasks, UploadFile, File, Form
-from starlette.responses import JSONResponse
-from starlette.requests import Request
-from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
-from pydantic import BaseModel, EmailStr
 from typing import List
-from fastapi import APIRouter
+
 from dotenv import dotenv_values
+from fastapi import APIRouter, BackgroundTasks, FastAPI, File, Form, UploadFile
+from fastapi_mail import ConnectionConfig, FastMail, MessageSchema
+from pydantic import BaseModel, EmailStr
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 
 config_credentials = dotenv_values(".env")
 
