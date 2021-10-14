@@ -35,7 +35,6 @@ conf = ConnectionConfig(
     USE_CREDENTIALS=True,
 )
 
-
 template = """
 weather = 22c
 """
@@ -56,4 +55,5 @@ async def email_subscribe(mail: EmailSchema) -> JSONResponse:
 
     fm = FastMail(conf)
     await fm.send_message(message)
-    return JSONResponse(status_code=200, content={"message": "email has been sent"})
+    return JSONResponse(status_code=200,
+                        content={"message": "email has been sent"})
