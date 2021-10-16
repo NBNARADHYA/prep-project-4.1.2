@@ -15,7 +15,7 @@ from starlette.responses import JSONResponse
 from services.server.schemas import Comment
 
 comment = APIRouter(
-   tags=["comment"]
+    tags=["comment"]
 )
 oauth = OAuth(starlette_config)
 
@@ -37,4 +37,3 @@ async def email_subscribe(req: Request, db: Session = Depends(get_db)):
     item = Comment(user_comment, email)
 
     return crud.create_user_comment(db=db, item=item, user_id=user_id)
-
