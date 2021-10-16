@@ -7,6 +7,7 @@ from starlette.requests import Request
 from fastapi.middleware.cors import CORSMiddleware
 from db import models
 from db.database import engine
+from services.server.subscribe.email import email
 
 
 # Create DB tables
@@ -17,6 +18,8 @@ app = FastAPI()
 
 # use app.include_router to add another app's routes
 app.include_router(oauth.router, prefix="/oauth")
+app.include_router(email)
+
 
 ALLOWED_HOSTS = ["*"]
 
