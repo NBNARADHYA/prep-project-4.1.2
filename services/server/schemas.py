@@ -7,7 +7,6 @@ class UserBase(BaseModel):
 
 
 class User(UserBase):
-
     class Config:
         orm_mode = True
 
