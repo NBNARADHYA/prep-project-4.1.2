@@ -1,8 +1,10 @@
 from os import name
-from sqlalchemy.orm import Session
-from . import models
+
 import schemas
 from db.database import SessionLocal
+from sqlalchemy.orm import Session
+
+from . import models
 
 # Dependency
 
