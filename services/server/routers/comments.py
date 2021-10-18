@@ -1,7 +1,11 @@
 from typing import Optional
 
-from authlib.integrations.starlette_client import OAuth, OAuthError
-from fastapi import APIRouter, Depends, HTTPException, status
+from authlib.integrations.starlette_client import OAuth
+from authlib.integrations.starlette_client import OAuthError
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import HTTPException
+from fastapi import status
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from starlette.requests import Request
