@@ -18,7 +18,7 @@ from services.server.verify import get_current_user
 
 
 comment = APIRouter(
-   tags=["comment"]
+    tags=["comment"]
 )
 oauth = OAuth(starlette_config)
 
@@ -31,4 +31,3 @@ class Comment(BaseModel):
 async def email_subscribe(place_id: int, item: Comment, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
 
     return crud.create_user_comment(db, item, place_id, user.email)
-
