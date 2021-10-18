@@ -37,7 +37,8 @@ def create_user(db: Session, user: schemas.User):
     return db_user
 
 
-def create_user_comment(db: Session, item: schemas.Comment, place_id: int, email):
+def create_user_comment(db: Session, item: schemas.Comment, place_id: int,
+                        email):
     comment = models.Comment(item.comment, place_id, email)
     db.add(comment)
     db.commit()
