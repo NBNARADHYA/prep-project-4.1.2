@@ -17,9 +17,7 @@ from services.server.schemas import User
 from services.server.verify import get_current_user
 
 
-comment = APIRouter(
-    tags=["comment"]
-)
+comment = APIRouter(tags=["comment"])
 oauth = OAuth(starlette_config)
 
 
@@ -28,8 +26,10 @@ class Comment(BaseModel):
     email: str
 
 
-@comment.post('/api/comments', response_model=User)
-async def email_subscribe(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+@comment.post("/api/comments", response_model=User)
+async def email_subscribe(
+    db: Session = Depends(get_db), user: User = Depends(get_current_user)
+):
     email = user.email
     user_comment = user.comment
     user_id = user.id
