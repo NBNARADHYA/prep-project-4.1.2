@@ -2,7 +2,8 @@ import re
 
 from db import models
 from db.crud import get_db
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
+from fastapi import Depends
 from schemas import User
 from verify import get_current_user
 
