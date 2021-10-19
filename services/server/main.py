@@ -36,9 +36,9 @@ app.add_middleware(
 
 
 # Set up the middleware to read the request session
-SECRET_KEY = os.environ.get('SECRET_KEY') or None
+SECRET_KEY = os.environ.get("SECRET_KEY") or None
 if SECRET_KEY is None:
-    raise 'Missing SECRET_KEY'
+    raise "Missing SECRET_KEY"
 app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
 
 
@@ -47,9 +47,10 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.get('/oauth2callback')
+@app.get("/oauth2callback")
 async def token(request: Request):
-    return HTMLResponse('''
+    return HTMLResponse(
+        """
                 <script>
                 function send(){
                     var req = new XMLHttpRequest();
@@ -70,9 +71,10 @@ async def token(request: Request):
                 }
                 </script>
                 <button onClick="send()">Get FastAPI JWT Token</button>
-            ''')
+            """
+    )
 
 
-@app.get('/example_protected_route', response_model=User)
+@app.get("/example_protected_route", response_model=User)
 async def protected_route(user: User = Depends(get_current_user)):
     return user
