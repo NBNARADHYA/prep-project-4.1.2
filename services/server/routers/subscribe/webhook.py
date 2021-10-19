@@ -12,10 +12,10 @@ router = APIRouter(tags=["webhook"])
 
 @router.post("/subscribe/webhook", response_model=User)
 async def webhook_subscribe(
-    webhook_url: str,
-    trigger_name: str,
-    location: str,
-    user: User = Depends(get_current_user),
+        webhook_url: str,
+        trigger_name: str,
+        location: str,
+        user: User = Depends(get_current_user),
 ):
 
     webhook_regex = re.compile(

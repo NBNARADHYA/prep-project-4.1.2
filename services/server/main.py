@@ -19,7 +19,6 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-
 # use app.include_router to add another app's routes
 app.include_router(oauth.router, prefix="/oauth")
 
@@ -35,7 +34,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # Set up the middleware to read the request session
 SECRET_KEY = os.environ.get("SECRET_KEY") or None
 if SECRET_KEY is None:
@@ -50,8 +48,7 @@ async def root():
 
 @app.get("/oauth2callback")
 async def token(request: Request):
-    return HTMLResponse(
-        """
+    return HTMLResponse("""
                 <script>
                 function send(){
                     var req = new XMLHttpRequest();
@@ -72,8 +69,7 @@ async def token(request: Request):
                 }
                 </script>
                 <button onClick="send()">Get FastAPI JWT Token</button>
-            """
-    )
+            """)
 
 
 @app.get("/example_protected_route", response_model=User)
