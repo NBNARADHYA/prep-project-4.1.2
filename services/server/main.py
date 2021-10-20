@@ -2,7 +2,8 @@ import os
 
 from db import models
 from db.database import engine
-from fastapi import Depends, FastAPI
+from fastapi import Depends
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import oauth
 from schemas import User

@@ -1,9 +1,17 @@
 from typing import List
 
 from dotenv import dotenv_values
-from fastapi import APIRouter, BackgroundTasks, FastAPI, File, Form, UploadFile
-from fastapi_mail import ConnectionConfig, FastMail, MessageSchema
-from pydantic import BaseModel, EmailStr
+from fastapi import APIRouter
+from fastapi import BackgroundTasks
+from fastapi import FastAPI
+from fastapi import File
+from fastapi import Form
+from fastapi import UploadFile
+from fastapi_mail import ConnectionConfig
+from fastapi_mail import FastMail
+from fastapi_mail import MessageSchema
+from pydantic import BaseModel
+from pydantic import EmailStr
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
