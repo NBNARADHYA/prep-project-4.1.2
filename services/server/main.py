@@ -1,17 +1,17 @@
 import os
-from fastapi import FastAPI, Depends
-from routers import oauth
-from schemas import User
-from verify import get_current_user
-from starlette.middleware.sessions import SessionMiddleware
-from starlette.responses import HTMLResponse
-from starlette.requests import Request
-from fastapi.middleware.cors import CORSMiddleware
-from routers.subscribe import webhook
+
 from db import models
 from db.database import engine
+from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from routers import oauth
+from routers.subscribe import webhook
+from schemas import User
 from sqlalchemy.orm import Session
-
+from starlette.middleware.sessions import SessionMiddleware
+from starlette.requests import Request
+from starlette.responses import HTMLResponse
+from verify import get_current_user
 
 # Create DB tables
 models.Base.metadata.create_all(bind=engine)
