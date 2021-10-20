@@ -9,9 +9,7 @@ from dotenv import dotenv_values
 
 config_credentials = dotenv_values(".env")
 
-email = APIRouter(
-    tags=["email"]
-)
+email = APIRouter(tags=["email"])
 
 
 class EmailSchema(BaseModel):
@@ -26,7 +24,7 @@ conf = ConnectionConfig(
     MAIL_SERVER="smtp.gmail.com",
     MAIL_TLS=True,
     MAIL_SSL=False,
-    USE_CREDENTIALS=True
+    USE_CREDENTIALS=True,
 )
 
 
@@ -35,7 +33,7 @@ weather = 22c
 """
 
 
-@email.post('/api/subscribe/email')
+@email.post("/api/subscribe/email")
 async def email_subscribe(mail: EmailSchema) -> JSONResponse:
 
     # get user data later and generate jwt
@@ -45,7 +43,7 @@ async def email_subscribe(mail: EmailSchema) -> JSONResponse:
         # List of recipients, as many as you can pass
         recipients=mail.dict().get("email"),
         body=template,
-        subtype="html"
+        subtype="html",
     )
 
     fm = FastMail(conf)
