@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from services.server.src.subscribe.webhook import webhook
-from services.server.src.subscribe.email import email
+from subscribe.webhook import webhook
+from subscribe.email import email
 
 import uvicorn
 

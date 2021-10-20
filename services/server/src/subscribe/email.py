@@ -6,8 +6,13 @@ from pydantic import BaseModel, EmailStr
 from typing import List
 from fastapi import APIRouter
 from dotenv import dotenv_values
+بfrom dotenv import load_dotenv
+import os
 
-config_credentials = dotenv_values(".env")
+load_dotenv()
+
+print("os.getenv('GCP_PROJECT_ID')", os.getenv('EMAIL'))
+config_credentials = dotenv_values("../.env")
 
 email = APIRouter(
    tags=["email"]
@@ -19,9 +24,9 @@ class EmailSchema(BaseModel):
 
 
 conf = ConnectionConfig(
-    MAIL_USERNAME=config_credentials["EMAIL"],
-    MAIL_PASSWORD=config_credentials["PASS"],
-    MAIL_FROM=config_credentials["EMAIL"],
+    MAIL_USERNAME=os.getenv('EMAIL'),
+    MAIL_PASSWORD=os.getenv('PASS'),
+    MAIL_FROM=os.getenv('EMAIL'),
     MAIL_PORT=587,
     MAIL_SERVER="smtp.gmail.com",
     MAIL_TLS=True,
