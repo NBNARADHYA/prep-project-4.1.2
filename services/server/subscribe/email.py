@@ -1,7 +1,7 @@
 from fastapi import FastAPI, BackgroundTasks, UploadFile, File, Form
 from starlette.responses import JSONResponse
 from starlette.requests import Request
-from fastapi_mail import FastMail, MessageSchema,ConnectionConfig
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from pydantic import BaseModel, EmailStr
 from typing import List
 from fastapi import APIRouter
@@ -10,7 +10,7 @@ from dotenv import dotenv_values
 config_credentials = dotenv_values(".env")
 
 email = APIRouter(
-   tags=["email"]
+    tags=["email"]
 )
 
 
@@ -42,10 +42,11 @@ async def email_subscribe(mail: EmailSchema) -> JSONResponse:
 
     message = MessageSchema(
         subject="Test Subject",
-        recipients=mail.dict().get("email"),  # List of recipients, as many as you can pass
+        # List of recipients, as many as you can pass
+        recipients=mail.dict().get("email"),
         body=template,
         subtype="html"
-        )
+    )
 
     fm = FastMail(conf)
     await fm.send_message(message)
