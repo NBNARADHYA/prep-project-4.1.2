@@ -21,7 +21,6 @@ class Notify:
     """
     Object: The SQLAlchemy db object.
     """
-
     def __init__(
         self,
         object,
@@ -40,11 +39,8 @@ class Notify:
         self.db = db
 
     def convert_location_to_xy(self):
-        item = (
-            self.db.query(func.st_y(Webhook.place), func.st_x(Webhook.place))
-            .filter(Webhook.user_email == self.email)
-            .first()
-        )
+        item = (self.db.query(func.st_y(Webhook.place), func.st_x(
+            Webhook.place)).filter(Webhook.user_email == self.email).first())
         return item
 
     def FetchWeather(self):
@@ -53,11 +49,8 @@ class Notify:
         print(API_KEY)
         baseurl = "https://api.openweathermap.org/data/2.5/onecall/"
         r = requests.get(
-            "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&units=metric&appid=c13e59b0754ff5c1c0de72d9396c2931".format(
-                converted[0], converted[1]
-            )
-            + "&exclude={part}"
-        )
+            "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&units=metric&appid=c13e59b0754ff5c1c0de72d9396c2931"
+            .format(converted[0], converted[1]) + "&exclude={part}")
         return (
             (json.loads(r.text)["current"])["weather"],
             (json.loads(r.text))["current"]["temp"],
@@ -66,16 +59,9 @@ class Notify:
     def webhook(self):
         information = self.FetchWeather()
 
-        body = (
-            "*" * 2
-            + self.trigger_name
-            + "*" * 2
-            + "\n"
-            + information[0][0]["description"]
-            + " - "
-            + str(information[1])
-            + " degree celsius."
-        )
+        body = ("*" * 2 + self.trigger_name + "*" * 2 + "\n" +
+                information[0][0]["description"] + " - " +
+                str(information[1]) + " degree celsius.")
         data = {
             "content": body,
             "avatar_url": self.avatar_url,
@@ -92,19 +78,15 @@ class Notify:
         email_from = os.environ.get("MAIL_USERNAME")
         context = ssl.create_default_context()
 
-        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+        with smtplib.SMTP_SSL("smtp.gmail.com", port,
+                              context=context) as server:
             message = MIMEMultipart()
             message["From"] = email_from
             message["To"] = self.email
             message["Subject"] = self.trigger_name
-            message["Body"] = (
-                self.trigger_name
-                + "\n"
-                + information[0][0]["description"]
-                + " - "
-                + str(information[1])
-                + " degree celsius."
-            )
+            message["Body"] = (self.trigger_name + "\n" +
+                               information[0][0]["description"] + " - " +
+                               str(information[1]) + " degree celsius.")
 
             text = message.as_string()
             # server.ehlo()
@@ -115,7 +97,6 @@ class Notify:
 
 
 db = next(get_db())
-
 
 webhook_entries = db.query(models.Webhook).all()
 for i in webhook_entries:
