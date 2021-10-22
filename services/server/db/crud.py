@@ -1,8 +1,9 @@
-from sqlalchemy.orm import Session
-from sqlalchemy.sql.expression import desc
-from . import models
 import schemas
 from db.database import SessionLocal
+from sqlalchemy.orm import Session
+from sqlalchemy.sql.expression import desc
+
+from . import models
 
 # Dependency
 
