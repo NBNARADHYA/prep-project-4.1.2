@@ -19,10 +19,16 @@ from db.models import User
 
 class Notify:
     """
-        Object: The SQLAlchemy db object.
+    Object: The SQLAlchemy db object.
     """
 
-    def __init__(self, object, db, username="MLH", avatar="https://mlh.io/assets/logos/mlh-facebook-ae6144c0a3605f15992ee2970616db8d.jpg"):
+    def __init__(
+        self,
+        object,
+        db,
+        username="MLH",
+        avatar="https://mlh.io/assets/logos/mlh-facebook-ae6144c0a3605f15992ee2970616db8d.jpg",
+    ):
         self.type = object.type
         self.url = object.url
         self.place = object.place
@@ -34,8 +40,11 @@ class Notify:
         self.db = db
 
     def convert_location_to_xy(self):
-        item = self.db.query(func.st_y(Webhook.place), func.st_x(
-            Webhook.place)).filter(Webhook.user_email == self.email).first()
+        item = (
+            self.db.query(func.st_y(Webhook.place), func.st_x(Webhook.place))
+            .filter(Webhook.user_email == self.email)
+            .first()
+        )
         return item
 
     def FetchWeather(self):
@@ -43,19 +52,35 @@ class Notify:
         API_KEY = os.environ.get("API_KEY")
         print(API_KEY)
         baseurl = "https://api.openweathermap.org/data/2.5/onecall/"
-        r = requests.get("https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&units=metric&appid=c13e59b0754ff5c1c0de72d9396c2931".format(
-            converted[0], converted[1]) + "&exclude={part}")
-        return ((json.loads(r.text)["current"])["weather"], (json.loads(r.text))["current"]["temp"])
+        r = requests.get(
+            "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&units=metric&appid=c13e59b0754ff5c1c0de72d9396c2931".format(
+                converted[0], converted[1]
+            )
+            + "&exclude={part}"
+        )
+        return (
+            (json.loads(r.text)["current"])["weather"],
+            (json.loads(r.text))["current"]["temp"],
+        )
 
     def webhook(self):
         information = self.FetchWeather()
 
-        body = "*"*2 + self.trigger_name + "*"*2 + "\n" + \
-            information[0][0]["description"] + " - " + \
-            str(information[1]) + " degree celsius."
-        data = {"content": body,
-                "avatar_url": self.avatar_url,
-                "username": self.username, }
+        body = (
+            "*" * 2
+            + self.trigger_name
+            + "*" * 2
+            + "\n"
+            + information[0][0]["description"]
+            + " - "
+            + str(information[1])
+            + " degree celsius."
+        )
+        data = {
+            "content": body,
+            "avatar_url": self.avatar_url,
+            "username": self.username,
+        }
 
         if self.url.startswith("https://discord.com/api/webhooks/") != False:
             r = requests.post(self.url, data)
@@ -72,8 +97,14 @@ class Notify:
             message["From"] = email_from
             message["To"] = self.email
             message["Subject"] = self.trigger_name
-            message["Body"] = self.trigger_name + "\n" + information[0][0]["description"] + \
-                " - " + str(information[1]) + " degree celsius."
+            message["Body"] = (
+                self.trigger_name
+                + "\n"
+                + information[0][0]["description"]
+                + " - "
+                + str(information[1])
+                + " degree celsius."
+            )
 
             text = message.as_string()
             # server.ehlo()

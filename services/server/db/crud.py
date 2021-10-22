@@ -44,8 +44,14 @@ def get_place_by_id(db: Session, place_id: int):
 
 
 def get_places_by_tag(db: Session, tag_name: str):
-    ans = db.query(models.Place).join(models.Place.tags).filter(
-        models.Tag.name == tag_name).order_by(desc(models.Place.vote_count)).limit(10).all()
+    ans = (
+        db.query(models.Place)
+        .join(models.Place.tags)
+        .filter(models.Tag.name == tag_name)
+        .order_by(desc(models.Place.vote_count))
+        .limit(10)
+        .all()
+    )
     return ans
 
 
@@ -71,10 +77,12 @@ def create_comment(db: Session, user: models.User, place: models.Place, body: st
 
 
 def create_webhook(db: Session, user: models.User, webhook: schemas.WebhookCreate):
-    db_webhook = models.Webhook(trigger_name=webhook.trigger_name,
-                                url=webhook.url,
-                                type=webhook.type,
-                                place='POINT({x} {y})'.format(x=webhook.locationX, y=webhook.locationY))
+    db_webhook = models.Webhook(
+        trigger_name=webhook.trigger_name,
+        url=webhook.url,
+        type=webhook.type,
+        place="POINT({x} {y})".format(x=webhook.locationX, y=webhook.locationY),
+    )
     db_webhook.user = user
     user.webhooks.append(db_webhook)
     db.add(db_webhook)
